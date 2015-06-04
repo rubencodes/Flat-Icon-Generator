@@ -1,0 +1,84 @@
+canvas {
+/*	margin: 0 auto;*/
+	border: black 1px solid;
+}
+output {
+	padding: 0;
+}
+.file-upload-box {
+	text-align: center;
+	padding: 20px;
+	width: 100%;
+	height: auto;
+	background: #eee;
+	border-color: #222;
+	border-style: dashed;
+	border-width: 1px;
+	color: #999;
+	cursor: pointer;
+}
+.thumb {
+	height: 75px;
+	border: 1px solid #000;
+	margin: 10px 5px 0 0;
+}
+#picker {
+	text-align: center;
+	color: #bbb;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	width: 120px;
+	border-right: 20px solid #1abc9c;
+	line-height: 20px;
+}
+#anglePicker {
+	border: 0;
+	width: 60px;
+}
+footer {
+	width: 100%;
+	padding: 20px;
+	text-align: center;
+	background: #eee;
+}
+body {
+	min-width: 300px;
+}
+#files {
+	margin: 0 auto;
+	display: none;
+}
+h3 {
+	margin: 20px;
+	font-weight: bold;
+	color: gray;
+}
+h4 {
+	font-weight: bold;
+}
+h5 {
+	margin-top: 7px;
+  margin-bottom: 7px;
+}
+tr>th:nth-of-type(2) {
+	text-align: right;
+}
+.navbar-brand {
+	color: #fff !important;
+}
+@media (max-width: 991px) {
+	#controls {
+		margin: 0 auto;
+	}
+	#left-side {
+		text-align: center;
+		margin-bottom: 20px;
+	}
+}
+
+@media (max-width: 768px) {
+	#brand-img {
+		margin-left:20px;
+	}
+}
