@@ -17,6 +17,10 @@ output {
 	color: #999;
 	cursor: pointer;
 }
+#files {
+	margin: 0 auto;
+	display: none;
+}
 .thumb {
 	height: 75px;
 	border: 1px solid #000;
@@ -44,10 +48,6 @@ footer {
 }
 body {
 	min-width: 300px;
-}
-#files {
-	margin: 0 auto;
-	display: none;
 }
 h3 {
 	margin: 20px;

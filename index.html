@@ -50,7 +50,7 @@
 								<h5>Circle</h5>
 							</th>
 							<th style="text-align: center;">
-								<input id="shapeSwitch" type="checkbox" class="js-switch js-check-change"/>
+								<input id="shapeSwitch" type="checkbox" class="js-switch js-check-change" />
 							</th>
 							<th>
 								<h5>Square</h5>
@@ -129,7 +129,7 @@
 							</th>
 						</tr>
 					</table>
-			<h6 style="color:gray;">Need icon images? <a href="http://ionicons.com/" target="_blank">Check out Ionicons!</a> Or, <a href="img/bolt.png" download>download this sample icon</a>.</h6>
+					<h6 style="color:gray;">Need icon images? <a href="http://ionicons.com/" target="_blank">Check out Ionicons!</a> Or, <a href="img/bolt.png" download>download this sample icon</a>.</h6>
 				</div>
 				<div class="col-md-4" style="text-align:center;">
 					<canvas id="canvas" height="300" width="300"></canvas>
@@ -145,6 +145,12 @@
 						<input type="file" id="files" name="files[]" />
 						<output id="list"></output>
 					</div>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-sm-4 col-sm-offset-4">
+					<a href="https://github.com/rubencodes/Flat-Icon-Generator" class="btn btn-primary btn-block">View on GitHub</a>
 				</div>
 			</div>
 		</div>
@@ -170,8 +176,8 @@
 		var lastUnmergedIconCanvas; //most recently uploaded icon after shadow
 		var lastMergedIconCanvas; //most recently uploaded icon after merging
 		var lastScaleFactor; //most recently used scale factor
-		
-		 //load image at a data URL
+
+		//load image at a data URL
 		function generateFlatIconFromImage(dataURL) {
 			loadToCanvas(dataURL, function (image) {
 				lastCroppedIconCanvas = cropVisibleImageToNewCanvas(image);
@@ -248,7 +254,7 @@
 			}
 		}
 
-		 //loads image selected onto a canvas and runs callback once complete
+		//loads image selected onto a canvas and runs callback once complete
 		function loadToCanvas(dataURL, callback) {
 			var imageObj = new Image();
 
@@ -260,7 +266,7 @@
 			imageObj.src = dataURL;
 		}
 
-		 //crop icon to visible in case there's blank space
+		//crop icon to visible in case there's blank space
 		function cropVisibleImageToNewCanvas(imageObj) {
 			//get canvas data
 			var canvas = document.createElement('canvas');
@@ -318,7 +324,7 @@
 			return cropCanvas;
 		}
 
-		 //create circle with diameter that can enclose icon canvas
+		//create circle with diameter that can enclose icon canvas
 		function createCircleCanvas(diameter) {
 			//create new canvas
 			var circleCanvas = document.createElement('canvas');
@@ -340,7 +346,7 @@
 			return circleCanvas;
 		}
 
-		 //re-center canvas in larger dimension
+		//re-center canvas in larger dimension
 		function centerCanvas(canvas, width, height) {
 			//save backup of canvas for later
 			var paddedCanvas = document.createElement('canvas');
@@ -357,7 +363,7 @@
 			return paddedCanvas;
 		}
 
-		 //draws shadow on an icon canvas
+		//draws shadow on an icon canvas
 		function drawShadow(canvas, degree) {
 			//get canvas data and info on where to draw shadow
 			var imageSize = canvas.width;
@@ -378,7 +384,7 @@
 				iconWithShadowContext.drawImage(canvas, i, slope * i);
 				var j = (i - 1) * slope;
 				if (slope * i > 1) { //if we've skipped around
-					while (j < i*slope && j < imageSize) {
+					while (j < i * slope && j < imageSize) {
 						iconWithShadowContext.drawImage(canvas, i, j);
 						j++;
 					}
@@ -395,17 +401,17 @@
 
 			//set image trail to shadow color
 			for (var i = 0, n = data.length; i < n; i += 4) {
-				var alpha = data[i + 3]/255;
-				var oldAlpha = oldData[i + 3]/255;
-				
+				var alpha = data[i + 3] / 255;
+				var oldAlpha = oldData[i + 3] / 255;
+
 				if (alpha > 0) {
 					if (oldAlpha > 0) {
-						data[i]     = (oldData[i]     + (1 - shadowOpacity) * 0);
+						data[i] = (oldData[i] + (1 - shadowOpacity) * 0);
 						data[i + 1] = (oldData[i + 1] + (1 - shadowOpacity) * 0);
 						data[i + 2] = (oldData[i + 2] + (1 - shadowOpacity) * 0);
 						data[i + 3] = (oldData[i + 3] + (1 - shadowOpacity) * data[i + 3]);
 					} else {
-						data[i]     = 0;
+						data[i] = 0;
 						data[i + 1] = 0;
 						data[i + 2] = 0;
 						data[i + 3] = data[i + 3] * shadowOpacity;
@@ -417,7 +423,7 @@
 			return iconWithShadow;
 		}
 
-		 //merges icon canvas with circle canvas
+		//merges icon canvas with circle canvas
 		function mergeIconWithCircle(iconCanvas, circleCanvas) {
 			var imageSize = iconCanvas.width;
 
@@ -434,19 +440,19 @@
 			// iterate over all pixels
 			for (var i = 0, n = circleData.length; i < n; i += 4) {
 				//get alpha channels
-				var iconAlpha = iconData[i + 3]/255;
-				var circleAlpha = circleData[i + 3]/255;
+				var iconAlpha = iconData[i + 3] / 255;
+				var circleAlpha = circleData[i + 3] / 255;
 
 				//if color visible on both icon and circle
 				if (circleAlpha > 0 && iconAlpha > 0) {
 					//use icon colors if solid
 					if (iconAlpha == 1 && circleAlpha == 1) {
-						circleData[i]     = iconData[i];
+						circleData[i] = iconData[i];
 						circleData[i + 1] = iconData[i + 1];
 						circleData[i + 2] = iconData[i + 2];
 						circleData[i + 3] = iconData[i + 3];
 					} else { //else merge if icon semi-transparent						
-						circleData[i]     = (iconData[i]     + (1 - iconAlpha) * circleData[i]);
+						circleData[i] = (iconData[i] + (1 - iconAlpha) * circleData[i]);
 						circleData[i + 1] = (iconData[i + 1] + (1 - iconAlpha) * circleData[i + 1]);
 						circleData[i + 2] = (iconData[i + 2] + (1 - iconAlpha) * circleData[i + 2]);
 						circleData[i + 3] = (iconData[i + 3] + (1 - iconAlpha) * circleData[i + 3]);
@@ -463,7 +469,7 @@
 			return final;
 		}
 
-		 //get diameter of circle than can enclose icon
+		//get diameter of circle than can enclose icon
 		function diameterForDimensions(width, height) {
 			return Math.sqrt(width * width + height * height);
 		}
@@ -473,7 +479,7 @@
 		function handleFileSelect(evt) {
 			evt.stopPropagation();
 			evt.preventDefault();
-
+			
 			//gets files from either upload button or drag & drop
 			var files = evt.dataTransfer ? evt.dataTransfer.files : evt.target.files; // FileList object
 
@@ -496,7 +502,7 @@
 						span.innerHTML = ['<img class="thumb" src="', e.target.result,
                             '" title="', escape(theFile.name), '"/>'].join('');
 						document.getElementById('list').insertBefore(span, null);
-						
+
 						document.getElementsByClassName("help-text")[0].style.display = "none";
 					};
 				})(f);
@@ -520,7 +526,7 @@
 		function triggerFileUpload() {
 			document.getElementById("files").click();
 		}
-		
+
 		/* END FILE API */
 
 		/* COLOR PICKER */
@@ -541,56 +547,60 @@
 			$(this).colpickSetColor(this.value);
 		});
 		/* END COLOR PICKER */
-		
+
 		/* INIT OPACITY SLIDER */
 		$('#opacityPicker').rangeslider({
 			polyfill: false,
 
 			// Callback function
-			onSlideEnd: function(position, value) {
+			onSlideEnd: function (position, value) {
 				updateCurrentShadow();
 			}
 		});
 		/* END INIT SLIDER */
-		
+
 		/* INIT LENGTH SLIDER */
 		$('#lengthPicker').rangeslider({
 			polyfill: false,
 
 			// Callback function
-			onSlideEnd: function(position, value) {
+			onSlideEnd: function (position, value) {
 				updateCurrentShadow();
 			}
 		});
 		/* END INIT SLIDER */
-		
+
 		/* INIT ANGLE SLIDER */
 		$('#anglePicker').rangeslider({
 			polyfill: false,
 
 			// Callback function
-			onSlideEnd: function(position, value) {
+			onSlideEnd: function (position, value) {
 				updateCurrentShadow();
 			}
 		});
 		/* END INIT SLIDER */
-		
+
 		/* INIT PADDING SLIDER */
 		$('#paddingPicker').rangeslider({
 			polyfill: false,
 
 			// Callback function
-			onSlideEnd: function(position, value) {
+			onSlideEnd: function (position, value) {
 				updateCurrentPadding()
 			}
 		});
 		/* END INIT SLIDER */
-		
+
 		/* INIT SWITCH */
 		var elem = document.getElementById('shapeSwitch');
-		var init = new Switchery(elem, { color: '#2196f3', size: 'small', jackColor: '#2196f3' });
+		var init = new Switchery(elem, {
+			color: '#2196f3',
+			size: 'small',
+			jackColor: '#2196f3'
+		});
 		var changeCheckbox = document.getElementsByClassName('js-check-change')[0];
-		changeCheckbox.onchange = function() {
+		changeCheckbox.onchange = function () {
 			updateCurrentCircle();
 		};
 		/* END INIT SWITCH */
