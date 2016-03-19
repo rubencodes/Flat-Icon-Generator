@@ -30,6 +30,8 @@ var lastScaleFactor; //most recently used scale factor
 
 //setup preview canvas placeholder
 function setupPlaceholder() {
+  previewContext.fillStyle = "rgb(200, 200, 200)";
+  previewContext.fillRect(0, 0, previewCanvas.width, previewCanvas.height);
   previewContext.fillStyle = "rgb(150, 150, 150)";
   previewContext.font = "16px Helvetica";
   previewContext.fillText("PREVIEW", 120, 150);
@@ -419,7 +421,7 @@ $(opacityPicker).rangeslider({
     polyfill: false,
 
     // Callback function
-    onSlideEnd: function (position, value) {
+    onSlide: function (position, value) {
         updateCurrentShadow();
     }
 });
@@ -430,7 +432,7 @@ $(lengthPicker).rangeslider({
     polyfill: false,
 
     // Callback function
-    onSlideEnd: function (position, value) {
+    onSlide: function (position, value) {
         updateCurrentShadow();
     }
 });
@@ -441,7 +443,7 @@ $(anglePicker).rangeslider({
     polyfill: false,
 
     // Callback function
-    onSlideEnd: function (position, value) {
+    onSlide: function (position, value) {
         updateCurrentShadow();
     }
 });
@@ -452,7 +454,7 @@ $(paddingPicker).rangeslider({
     polyfill: false,
 
     // Callback function
-    onSlideEnd: function (position, value) {
+    onSlide: function (position, value) {
         updateCurrentPadding()
     }
 });

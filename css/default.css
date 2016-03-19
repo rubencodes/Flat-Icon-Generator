@@ -14,10 +14,6 @@ body {
   padding-bottom: 6rem;
   min-height: 100%;
 }
-canvas {
-/*	margin: 0 auto;*/
-	border: black 1px solid;
-}
 .container {
     overflow: hidden;
 }
