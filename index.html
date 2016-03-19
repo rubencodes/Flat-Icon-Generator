@@ -8,611 +8,175 @@
 	<meta name="author" content="">
 	<title>Flat Icon Generator</title>
 	<link rel="shortcut icon" href="img/icon.png">
+  
+  	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="theme-color" content="#2196f3">
+	<meta name="msapplication-navbutton-color" content="#2196f3">
+	<meta name="description" content="Add a background & shadow to any icon, freely and easily. It even works offline!" />
+
+	<link rel="manifest" href="/manifest.json">
+	<link rel="apple-touch-icon" href="/img/mobile/ios/60.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/img/mobile/ios/76.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/img/mobile/ios/120.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/img/mobile/ios/152.png">
+  
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/flat-ui.min.css">
-	<link rel="stylesheet" href="css/switchery.min.css" />
 	<link rel="stylesheet" href="css/colpick.css">
 	<link rel="stylesheet" href="css/rangeslider.css">
 	<link rel="stylesheet" href="css/default.css">
 
 	<!--[if IE]>
-				<script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
-				<script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->
+        <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 
-<body>
-	<div style="min-height: 100vh;">
-		<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-			<div class="container">
-				<div class="navbar-header">
-					<img id="brand-img" src="img/icon.png" height="50" style="margin-top:5px;float:left;">
-					<a class="navbar-brand" href="#" style="margin-left:0;">Flat Icon Generator</a>
-				</div>
-			</div>
-		</nav>
+<body id="drop_zone" style="min-height: 100vh;">
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <img id="brand-img" src="img/icon.png" height="50">
+                <a class="navbar-brand" href="#" style="margin-left:0;">Flat Icon <span class="hidden-xs">Generator</span></a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                      <a class="navbar-link" href="https://github.com/rubencodes/Flat-Icon-Generator" class="btn btn-primary btn-block" target="_blank">
+                        About
+                      </a>
+                    </li>
+                    <li class="hidden-sm hidden-xs">&nbsp;&nbsp;</li>
+                    <li>
+                      <button class="btn btn-danger navbar-btn" onclick="triggerFileUpload()">
+                        <span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload
+                        <input type="file" id="files" name="files[]" />
+                      </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-		<div class="container">
-			<div class="row">
-				<div class="col-md-8" id="left-side">
-					<table id="controls">
-						<tr>
-							<th>
-								<h4>Icon</h4>
-							</th>
-						</tr>
-						<tr>
-							<th>
-								<h5 style="min-width: 150px;">Shape:</h5>
-							</th>
-							<th>
-								<h5>Circle</h5>
-							</th>
-							<th style="text-align: center;">
-								<input id="shapeSwitch" type="checkbox" class="js-switch js-check-change" />
-							</th>
-							<th>
-								<h5>Square</h5>
-							</th>
-						</tr>
-						<tr>
-							<th>
-								<h5 style="min-width: 150px;">Color:</h5>
-							</th>
-							<th>
-								<h5>#&nbsp;</h5>
-							</th>
-							<th>
-								<input type="text" id="picker" value="1abc9c" maxlength="6"></input>
-							</th>
-						</tr>
-						<tr>
-							<th>
-								<h5>Padding:</h5>
-							</th>
-							<th>
-								<h5>0&nbsp;</h5>
-							</th>
-							<th>
-								<input id="paddingPicker" type="range" min="0.00" max="1.00" step="0.01" value="0.00">
-							</th>
-							<th>
-								<h5>&nbsp;100%</h5>
-							</th>
-						</tr>
-						<tr>
-							<th>
-								<h4>Shadow</h4>
-							</th>
-						</tr>
-						<tr>
-							<th>
-								<h5>Angle:</h5>
-							</th>
-							<th>
-								<h5>0&nbsp;</h5>
-							</th>
-							<th>
-								<input id="anglePicker" type="range" min="0" max="90" step="1" value="45">
-							</th>
-							<th>
-								<h5>&nbsp;90&deg;</h5>
-							</th>
-						</tr>
-						<tr>
-							<th>
-								<h5>Opacity:</h5>
-							</th>
-							<th>
-								<h5>0&nbsp;</h5>
-							</th>
-							<th>
-								<input id="opacityPicker" type="range" min="0.00" max="1.00" step="0.01" value="0.30">
-							</th>
-							<th>
-								<h5>&nbsp;100%</h5>
-							</th>
-						</tr>
-						<tr>
-							<th>
-								<h5>Length:</h5>
-							</th>
-							<th>
-								<h5>0&nbsp;</h5>
-							</th>
-							<th>
-								<input id="lengthPicker" type="range" min="0.00" max="1.00" step="0.01" value="1.00">
-							</th>
-							<th>
-								<h5>&nbsp;100%</h5>
-							</th>
-						</tr>
-					</table>
-					<h6 style="color:gray;">Need icon images? <a href="http://ionicons.com/" target="_blank">Check out Ionicons!</a> Or, <a href="img/bolt.png" download>download this sample icon</a>.</h6>
-				</div>
-				<div class="col-md-4" style="text-align:center;">
-					<canvas id="canvas" height="300" width="300"></canvas>
-					<br>
-					<a id="download" class="btn btn-primary disabled" onclick="downloadIcon(this)">Click to Download</a>
-				</div>
-			</div>
-			<br>
-			<div class="row">
-				<div class="col-sm-12">
-					<div id="drop_zone" class="file-upload-box" onclick="triggerFileUpload()">
-						<h3 class="help-text">Drop Icon or Click to Browse<br><small>(Works best in Chrome)</small></h3>
-						<input type="file" id="files" name="files[]" />
-						<output id="list"></output>
-					</div>
-				</div>
-			</div>
-			<br>
-			<div class="row">
-				<div class="col-sm-4 col-sm-offset-4">
-					<a href="https://github.com/rubencodes/Flat-Icon-Generator" class="btn btn-primary btn-block">View on GitHub</a>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8" id="left-side">
+                <table id="controls">
+                    <tr>
+                        <th>
+                            <h4>Icon</h4>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h5>Shape:</h5>
+                        </th>
+                        <th></th>
+                        <th style="max-width: 150px;">
+                            <select id="shapePicker" class="form-control">
+                              <option value="circle">Circle</option>
+                              <option value="square">Square</option>
+                            </select>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h5>Color:</h5>
+                        </th>
+                        <th>
+                            <h5>#&nbsp;</h5>
+                        </th>
+                        <th style="max-width: 150px;">
+                            <input type="text" id="colorPicker" value="1abc9c" maxlength="6"></input>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h5>Padding:</h5>
+                        </th>
+                        <th>
+                            <h5>0&nbsp;</h5>
+                        </th>
+                        <th>
+                            <input id="paddingPicker" type="range" min="0.00" max="1.00" step="0.01" value="0.00">
+                        </th>
+                        <th>
+                            <h5>&nbsp;100%</h5>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h4>Shadow</h4>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h5>Angle:</h5>
+                        </th>
+                        <th>
+                            <h5>0&nbsp;</h5>
+                        </th>
+                        <th>
+                            <input id="anglePicker" type="range" min="0" max="90" step="1" value="45">
+                        </th>
+                        <th>
+                            <h5>&nbsp;90&deg;</h5>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h5>Opacity:</h5>
+                        </th>
+                        <th>
+                            <h5>0&nbsp;</h5>
+                        </th>
+                        <th>
+                            <input id="opacityPicker" type="range" min="0.00" max="1.00" step="0.01" value="0.30">
+                        </th>
+                        <th>
+                            <h5>&nbsp;100%</h5>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h5>Length:</h5>
+                        </th>
+                        <th>
+                            <h5>0&nbsp;</h5>
+                        </th>
+                        <th>
+                            <input id="lengthPicker" type="range" min="0.00" max="1.00" step="0.01" value="1.00">
+                        </th>
+                        <th>
+                            <h5>&nbsp;100%</h5>
+                        </th>
+                    </tr>
+                </table>
+                <h6 style="color:gray;">Need icon images? <a href="http://ionicons.com/" target="_blank">Check out Ionicons!</a> Or, <a href="img/bolt.png" download>download this sample icon</a>.</h6>
+            </div>
+            <div class="col-md-4" style="text-align:center;">
+                <canvas id="canvas" height="300" width="300"></canvas>
+                <br>
+                <a id="download" class="btn btn-primary disabled" onclick="downloadIcon(this)">Click to Download</a>
+            </div>
+        </div>
+    </div>
 	<br>
 	<footer>
 		Copyright &copy; 2015 <a href="http://ruben.codes/" target="_blank">Ruben.Codes</a>
 	</footer>
+	<script src="/sw_install.js" async></script>
 	<script src="js/colpick.js"></script>
 	<script src="js/rangeslider.min.js"></script>
-	<script src="js/switchery.min.js"></script>
-	<script>
-		var squareShape = false; //square or circle icon?
-		var defaultIconColor = "hsl(168, 76%, 42%)";
-		var downloadDisabled = true;
-		var shadowOpacity = 0.3; //opacity for shadow
-		var shadowAngle = 45; //opacity for shadow
-		var padding = 0; //percent padding for icon (0 - 1.0)
-		var shadowLength = 1; //length of shadow
-		var lastCroppedIconCanvas; //most recently uploaded icon after cropping
-		var lastCircleCanvas; //most recently generated circle canvas
-		var lastPaddedIconCanvas; //most recently uploaded icon after padding
-		var lastUnmergedIconCanvas; //most recently uploaded icon after shadow
-		var lastMergedIconCanvas; //most recently uploaded icon after merging
-		var lastScaleFactor; //most recently used scale factor
-
-		//load image at a data URL
-		function generateFlatIconFromImage(dataURL) {
-			loadToCanvas(dataURL, function (image) {
-				lastCroppedIconCanvas = cropVisibleImageToNewCanvas(image);
-				var widthWithPadding = lastCroppedIconCanvas.width * padding + lastCroppedIconCanvas.width;
-				var heightWithPadding = lastCroppedIconCanvas.height * padding + lastCroppedIconCanvas.height;
-				lastCircleCanvas = createCircleCanvas(diameterForDimensions(widthWithPadding, heightWithPadding));
-				lastPaddedIconCanvas = centerCanvas(lastCroppedIconCanvas, lastCircleCanvas.width, lastCircleCanvas.height);
-				lastUnmergedIconCanvas = drawShadow(lastPaddedIconCanvas, shadowAngle);
-				lastMergedIconCanvas = mergeIconWithCircle(lastUnmergedIconCanvas, lastCircleCanvas);
-				updatePreview();
-
-				if (downloadDisabled) {
-					document.getElementById("download").classList.remove("disabled");
-					downloadDisabled = false;
-				}
-			});
-		}
-
-		function updateCurrentPadding() {
-			padding = document.getElementById("paddingPicker").value;
-			if (lastCroppedIconCanvas != null) {
-				var widthWithPadding = lastCroppedIconCanvas.width * padding + lastCroppedIconCanvas.width;
-				var heightWithPadding = lastCroppedIconCanvas.height * padding + lastCroppedIconCanvas.height;
-				lastCircleCanvas = createCircleCanvas(diameterForDimensions(widthWithPadding, heightWithPadding));
-				lastPaddedIconCanvas = centerCanvas(lastCroppedIconCanvas, lastCircleCanvas.width, lastCircleCanvas.height);
-				lastUnmergedIconCanvas = drawShadow(lastPaddedIconCanvas, $('#anglePicker').val());
-				lastMergedIconCanvas = mergeIconWithCircle(lastUnmergedIconCanvas, lastCircleCanvas);
-				updatePreview();
-			}
-		}
-
-		function updateCurrentShadow() {
-			shadowAngle = document.getElementById("anglePicker").value;
-			shadowOpacity = document.getElementById("opacityPicker").value;
-			shadowLength = document.getElementById("lengthPicker").value;
-
-			if (lastPaddedIconCanvas != null) {
-				lastUnmergedIconCanvas = drawShadow(lastPaddedIconCanvas, shadowAngle);
-				lastMergedIconCanvas = mergeIconWithCircle(lastUnmergedIconCanvas, lastCircleCanvas);
-				updatePreview();
-			}
-		}
-
-		function updateCurrentCircle() {
-			squareShape = document.getElementsByClassName("js-check-change")[0].checked;
-			if (lastUnmergedIconCanvas != null) {
-				lastCircleCanvas = createCircleCanvas(lastUnmergedIconCanvas.width);
-				lastMergedIconCanvas = mergeIconWithCircle(lastUnmergedIconCanvas, lastCircleCanvas);
-				updatePreview();
-			}
-		}
-
-		function updatePreview() {
-			//get canvas info
-			var canvas = document.getElementById("canvas");
-			var context = canvas.getContext("2d");
-
-			//reset canvas
-			context.scale(1 / lastScaleFactor, 1 / lastScaleFactor);
-			context.clearRect(0, 0, canvas.width, canvas.height);
-
-			//fit icon to canvas and draw 
-			lastScaleFactor = canvas.width / lastMergedIconCanvas.width;
-			context.scale(lastScaleFactor, lastScaleFactor);
-
-			context.drawImage(lastMergedIconCanvas, 0, 0);
-		}
-
-		function downloadIcon(link) {
-			if (!downloadDisabled) {
-				//set link properties
-				link.href = lastMergedIconCanvas.toDataURL();
-				link.download = "icon.png";
-			}
-		}
-
-		//loads image selected onto a canvas and runs callback once complete
-		function loadToCanvas(dataURL, callback) {
-			var imageObj = new Image();
-
-			// load image from data url
-			imageObj.onload = function () {
-				callback(imageObj);
-			};
-
-			imageObj.src = dataURL;
-		}
-
-		//crop icon to visible in case there's blank space
-		function cropVisibleImageToNewCanvas(imageObj) {
-			//get canvas data
-			var canvas = document.createElement('canvas');
-			var context = canvas.getContext('2d');
-			canvas.width = imageObj.width;
-			canvas.height = imageObj.height;
-
-			//draw image to canvas
-			context.drawImage(imageObj, 0, 0);
-
-			//get image data
-			var imageWidth = imageObj.width;
-			var imageHeight = imageObj.height;
-			var imageData = canvas.getContext('2d').getImageData(0, 0, imageWidth, imageHeight);
-			var data = imageData.data;
-
-			var cropStartX = imageWidth;
-			var cropStartY = imageHeight;
-			var cropEndX = 0;
-			var cropEndY = 0;
-
-			for (var y = 0; y < imageHeight; y++) {
-				// loop through each column
-				for (var x = 0; x < imageWidth; x++) {
-					var alpha = data[((imageWidth * y) + x) * 4 + 3];
-
-					//if this is an object pixel
-					if (alpha > 0) {
-						//update bounds
-						if (x < cropStartX) {
-							cropStartX = x;
-						}
-						if (x > cropEndX) {
-							cropEndX = x;
-						}
-						if (y < cropStartY) {
-							cropStartY = y;
-						}
-						if (y > cropEndY) {
-							cropEndY = y;
-						}
-					}
-				}
-			}
-
-			var newWidth = cropEndX - cropStartX + 1;
-			var newHeight = cropEndY - cropStartY + 1;
-
-			var cropCanvas = document.createElement('canvas');
-			cropCanvas.width = newWidth;
-			cropCanvas.height = newHeight;
-
-			cropCanvas.getContext('2d').drawImage(imageObj, cropStartX, cropStartY, newWidth, newHeight, 0, 0, newWidth, newHeight);
-
-			return cropCanvas;
-		}
-
-		//create circle with diameter that can enclose icon canvas
-		function createCircleCanvas(diameter) {
-			//create new canvas
-			var circleCanvas = document.createElement('canvas');
-			circleCanvas.width = diameter;
-			circleCanvas.height = diameter;
-			var context = circleCanvas.getContext('2d');
-
-			//choose circle color
-			context.fillStyle = defaultIconColor;
-
-			//draw circle
-			if (!squareShape) {
-				context.arc(diameter / 2, diameter / 2, diameter / 2, 0, 2 * Math.PI);
-				context.fill();
-			} else {
-				context.fillRect(0, 0, diameter, diameter);
-			}
-
-			return circleCanvas;
-		}
-
-		//re-center canvas in larger dimension
-		function centerCanvas(canvas, width, height) {
-			//save backup of canvas for later
-			var paddedCanvas = document.createElement('canvas');
-			paddedCanvas.width = width;
-			paddedCanvas.height = height;
-
-			//calculate offsets
-			var paddingX = (width - canvas.width) * 0.5;
-			var paddingY = (height - canvas.height) * 0.5;
-
-			//draw image in new canvas at offset
-			paddedCanvas.getContext('2d').drawImage(canvas, paddingX, paddingY);
-
-			return paddedCanvas;
-		}
-
-		//draws shadow on an icon canvas
-		function drawShadow(canvas, degree) {
-			//get canvas data and info on where to draw shadow
-			var imageSize = canvas.width;
-			var context = canvas.getContext('2d');
-			var degreesToRadians = 0.0174532925;
-			var slope = Math.tan(degree * degreesToRadians);
-
-			//create new canvas to avoid modifying old
-			var iconWithShadow = document.createElement('canvas');
-			var iconWithShadowContext = iconWithShadow.getContext('2d');
-			iconWithShadow.width = imageSize;
-			iconWithShadow.height = imageSize;
-			iconWithShadowContext.drawImage(canvas, 0, 0);
-
-			//translate image in direction of slope
-			iconWithShadowContext.imageSmoothingEnabled = true;
-			for (var i = 1; i < (imageSize / 2) * shadowLength; i++) {
-				iconWithShadowContext.drawImage(canvas, i, slope * i);
-				var j = (i - 1) * slope;
-				if (slope * i > 1) { //if we've skipped around
-					while (j < i * slope && j < imageSize) {
-						iconWithShadowContext.drawImage(canvas, i, j);
-						j++;
-					}
-				}
-			}
-
-			//get new canvas image data
-			var imageData = iconWithShadowContext.getImageData(0, 0, imageSize, imageSize);
-			var data = imageData.data;
-
-			//get old canvas image data
-			var oldImageData = context.getImageData(0, 0, imageSize, imageSize);
-			var oldData = oldImageData.data;
-
-			//set image trail to shadow color
-			for (var i = 0, n = data.length; i < n; i += 4) {
-				var alpha = data[i + 3] / 255;
-				var oldAlpha = oldData[i + 3] / 255;
-
-				if (alpha > 0) {
-					if (oldAlpha > 0) {
-						data[i] = (oldData[i] + (1 - shadowOpacity) * 0);
-						data[i + 1] = (oldData[i + 1] + (1 - shadowOpacity) * 0);
-						data[i + 2] = (oldData[i + 2] + (1 - shadowOpacity) * 0);
-						data[i + 3] = (oldData[i + 3] + (1 - shadowOpacity) * data[i + 3]);
-					} else {
-						data[i] = 0;
-						data[i + 1] = 0;
-						data[i + 2] = 0;
-						data[i + 3] = data[i + 3] * shadowOpacity;
-					}
-				}
-			}
-			iconWithShadowContext.putImageData(imageData, 0, 0);
-
-			return iconWithShadow;
-		}
-
-		//merges icon canvas with circle canvas
-		function mergeIconWithCircle(iconCanvas, circleCanvas) {
-			var imageSize = iconCanvas.width;
-
-			//get icon data
-			var iconContext = iconCanvas.getContext('2d');
-			var iconImageData = iconContext.getImageData(0, 0, imageSize, imageSize);
-			var iconData = iconImageData.data;
-
-			//get circle data
-			var circleContext = circleCanvas.getContext('2d');
-			var circleImageData = circleContext.getImageData(0, 0, imageSize, imageSize);
-			var circleData = circleImageData.data;
-
-			// iterate over all pixels
-			for (var i = 0, n = circleData.length; i < n; i += 4) {
-				//get alpha channels
-				var iconAlpha = iconData[i + 3] / 255;
-				var circleAlpha = circleData[i + 3] / 255;
-
-				//if color visible on both icon and circle
-				if (circleAlpha > 0 && iconAlpha > 0) {
-					//use icon colors if solid
-					if (iconAlpha == 1 && circleAlpha == 1) {
-						circleData[i] = iconData[i];
-						circleData[i + 1] = iconData[i + 1];
-						circleData[i + 2] = iconData[i + 2];
-						circleData[i + 3] = iconData[i + 3];
-					} else { //else merge if icon semi-transparent						
-						circleData[i] = (iconData[i] + (1 - iconAlpha) * circleData[i]);
-						circleData[i + 1] = (iconData[i + 1] + (1 - iconAlpha) * circleData[i + 1]);
-						circleData[i + 2] = (iconData[i + 2] + (1 - iconAlpha) * circleData[i + 2]);
-						circleData[i + 3] = (iconData[i + 3] + (1 - iconAlpha) * circleData[i + 3]);
-					}
-				}
-			}
-
-			//put icon+circle data on new canvas
-			var final = document.createElement('canvas');
-			final.width = imageSize;
-			final.height = imageSize;
-			final.getContext('2d').putImageData(circleImageData, 0, 0);
-
-			return final;
-		}
-
-		//get diameter of circle than can enclose icon
-		function diameterForDimensions(width, height) {
-			return Math.sqrt(width * width + height * height);
-		}
-
-		/* FILE API */
-
-		function handleFileSelect(evt) {
-			evt.stopPropagation();
-			evt.preventDefault();
-			
-			//gets files from either upload button or drag & drop
-			var files = evt.dataTransfer ? evt.dataTransfer.files : evt.target.files; // FileList object
-
-			// Loop through the FileList and render image files as thumbnails.
-			for (var i = 0, f; f = files[i]; i++) {
-
-				// Only process image files.
-				if (!f.type.match('image.*')) {
-					continue;
-				}
-
-				var reader = new FileReader();
-
-				// Closure to capture the file information.
-				reader.onload = (function (theFile) {
-					return function (e) {
-						// Render thumbnail.
-						generateFlatIconFromImage(e.target.result);
-						var span = document.createElement('span');
-						span.innerHTML = ['<img class="thumb" src="', e.target.result,
-                            '" title="', escape(theFile.name), '"/>'].join('');
-						document.getElementById('list').insertBefore(span, null);
-
-						document.getElementsByClassName("help-text")[0].style.display = "none";
-					};
-				})(f);
-
-				// Read in the image file as a data URL.
-				reader.readAsDataURL(f);
-			}
-		}
-
-		function handleDragOver(evt) {
-			evt.stopPropagation();
-			evt.preventDefault();
-			evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
-		}
-
-		var dropZone = document.getElementById('drop_zone');
-		dropZone.addEventListener('dragover', handleDragOver, false);
-		dropZone.addEventListener('drop', handleFileSelect, false);
-
-		//trigger file upload button
-		function triggerFileUpload() {
-			document.getElementById("files").click();
-		}
-
-		/* END FILE API */
-
-		/* COLOR PICKER */
-		$('#picker').colpick({
-			color: defaultIconColor,
-			layout: 'hex',
-			submit: 0,
-			colorScheme: 'dark',
-			onChange: function (hsb, hex, rgb, el, bySetColor) {
-				$(el).css('border-color', '#' + hex);
-				defaultIconColor = "#" + hex;
-				updateCurrentCircle();
-
-				// Fill the text box just if the color was set using the picker, and not the colpickSetColor function.
-				if (!bySetColor) $(el).val(hex);
-			}
-		}).keyup(function () {
-			$(this).colpickSetColor(this.value);
-		});
-		/* END COLOR PICKER */
-
-		/* INIT OPACITY SLIDER */
-		$('#opacityPicker').rangeslider({
-			polyfill: false,
-
-			// Callback function
-			onSlideEnd: function (position, value) {
-				updateCurrentShadow();
-			}
-		});
-		/* END INIT SLIDER */
-
-		/* INIT LENGTH SLIDER */
-		$('#lengthPicker').rangeslider({
-			polyfill: false,
-
-			// Callback function
-			onSlideEnd: function (position, value) {
-				updateCurrentShadow();
-			}
-		});
-		/* END INIT SLIDER */
-
-		/* INIT ANGLE SLIDER */
-		$('#anglePicker').rangeslider({
-			polyfill: false,
-
-			// Callback function
-			onSlideEnd: function (position, value) {
-				updateCurrentShadow();
-			}
-		});
-		/* END INIT SLIDER */
-
-		/* INIT PADDING SLIDER */
-		$('#paddingPicker').rangeslider({
-			polyfill: false,
-
-			// Callback function
-			onSlideEnd: function (position, value) {
-				updateCurrentPadding()
-			}
-		});
-		/* END INIT SLIDER */
-
-		/* INIT SWITCH */
-		var elem = document.getElementById('shapeSwitch');
-		var init = new Switchery(elem, {
-			color: '#2196f3',
-			size: 'small',
-			jackColor: '#2196f3'
-		});
-		var changeCheckbox = document.getElementsByClassName('js-check-change')[0];
-		changeCheckbox.onchange = function () {
-			updateCurrentCircle();
-		};
-		/* END INIT SWITCH */
-
-		var canvas = document.getElementById("canvas");
-		var context = canvas.getContext("2d");
-		context.fillStyle = "rgb(150, 150, 150)";
-		context.font = "20px Georgia";
-		context.fillText("Preview", 120, 150);
-
-		document.getElementById('files').addEventListener('change', handleFileSelect, false);
-	</script>
+	<script src="js/flaticon.js"></script>
 
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 </body>
