@@ -4,15 +4,14 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="">
-	<meta name="author" content="">
 	<title>Flat Icon Generator</title>
-	<link rel="shortcut icon" href="img/icon.png">
+	<link rel="shortcut icon" href="img/favicon.png">
   
   	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
 	<meta name="theme-color" content="#2196f3">
 	<meta name="msapplication-navbutton-color" content="#2196f3">
+	<meta name="author" content="Ruben Martinez Jr. (@RubenCodes)">
 	<meta name="description" content="Add a background & shadow to any icon, freely and easily. It even works offline!" />
 
 	<link rel="manifest" href="/manifest.json">
@@ -21,7 +20,6 @@
 	<link rel="apple-touch-icon" sizes="120x120" href="/img/mobile/ios/120.png">
 	<link rel="apple-touch-icon" sizes="152x152" href="/img/mobile/ios/152.png">
   
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/flat-ui.min.css">
 	<link rel="stylesheet" href="css/colpick.min.css">
@@ -41,7 +39,7 @@
                 <button class="btn btn-danger navbar-btn uploadButton hidden-sm hidden-md hidden-lg hidden-xl" onclick="triggerFileUpload()">
                   <span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload
                 </button>
-                <img id="brand-img" class="hidden-phone" src="img/icon.png" height="50">
+                <img id="brand-img" class="hidden-phone" src="img/favicon.png" width="50" height="50">
                 <a class="navbar-brand" href="#" style="margin-left:0;">Flat Icon <span class="hidden-xs">Generator</span></a>
             </div>
             <div class="collapse navbar-collapse">
@@ -170,11 +168,12 @@
 		Copyright &copy; 2015 <a href="http://ruben.codes/" target="_blank">Ruben.Codes</a>
 	</footer>
 	<script src="/sw_install.js" async></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 	<script src="js/colpick.min.js"></script>
 	<script src="js/rangeslider.min.js"></script>
 	<script src="js/flaticon.min.js"></script>
 
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

@@ -22,7 +22,7 @@ const urlsToCache = [
   '/css/flat-ui.min.css',
   '/css/default.css',
   '/img/bolt.png',
-  '/img/icon.png'
+  '/img/favicon.png'
 ];
 
 toolbox.precache(urlsToCache);
