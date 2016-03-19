@@ -14,13 +14,8 @@ const urlsToCache = [
   '/sw_install.js',
   '/sw.js',
   '/js/sw-toolbox/sw-toolbox.js',
-  '/js/colpick.min.js',
-  '/js/rangeslider.min.js',
-  '/js/flaticon.min.js',
-  '/css/colpick.min.css',
-  '/css/rangeslider.min.css',
-  '/css/flat-ui.min.css',
-  '/css/default.css',
+  '/js/libraries.min.js',
+  '/css/libraries.min.css',
   '/img/bolt.png',
   '/img/favicon.png'
 ];
