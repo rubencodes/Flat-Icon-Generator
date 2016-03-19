@@ -105,7 +105,13 @@ body.dropping:after {
   text-align: center;
   z-index: 10000000;
 }
-
+.uploadButton {
+    float: right;
+    margin-right: 20px;
+}
+.mainBody {
+  padding-top: 85px;
+}
 @media (max-width: 991px) {
 	#controls {
 		margin: 0 auto;
@@ -115,9 +121,13 @@ body.dropping:after {
 		margin-bottom: 20px;
 	}
 }
-
 @media (max-width: 768px) {
 	#brand-img {
 		margin-left:20px;
 	}
+}
+@media (max-width: 420px) {
+  .hidden-phone {
+    display: none;
+  }
 }
