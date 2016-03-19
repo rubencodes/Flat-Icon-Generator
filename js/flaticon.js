@@ -41,12 +41,12 @@ function setupPlaceholder() {
 function generateFlatIconFromImage(dataURL) {
     loadToCanvas(dataURL, function (image) {
         lastCroppedIconCanvas = cropVisibleImageToNewCanvas(image);
-        var widthWithPadding = lastCroppedIconCanvas.width * padding + lastCroppedIconCanvas.width;
+        var widthWithPadding  = lastCroppedIconCanvas.width  * padding + lastCroppedIconCanvas.width;
         var heightWithPadding = lastCroppedIconCanvas.height * padding + lastCroppedIconCanvas.height;
-        lastIconBackground = createIconBackground(diameterForDimensions(widthWithPadding, heightWithPadding));
-        lastPaddedIconCanvas = centerCanvas(lastCroppedIconCanvas, lastIconBackground.width, lastIconBackground.height);
+        lastIconBackground    = createIconBackground(diameterForDimensions(widthWithPadding, heightWithPadding));
+        lastPaddedIconCanvas  = centerCanvas(lastCroppedIconCanvas, lastIconBackground.width, lastIconBackground.height);
         lastUnmergedIconCanvas = drawShadow(lastPaddedIconCanvas, shadowAngle);
-        lastMergedIconCanvas = mergeIconWithBackground(lastUnmergedIconCanvas, lastIconBackground);
+        lastMergedIconCanvas   = mergeIconWithBackground(lastUnmergedIconCanvas, lastIconBackground);
       
         //update the icon preview
         updatePreview();
@@ -225,14 +225,14 @@ function centerCanvas(canvas, width, height) {
 function drawShadow(canvas, degree) {
     //get canvas data and info on where to draw shadow
     var imageSize = canvas.width;
-    var context = canvas.getContext('2d');
+    var context   = canvas.getContext('2d');
     var degreesToRadians = 0.0174532925;
     var slope = Math.tan(degree * degreesToRadians);
 
     //create new canvas to avoid modifying old
     var iconWithShadow = document.createElement('canvas');
     var iconWithShadowContext = iconWithShadow.getContext('2d');
-    iconWithShadow.width = imageSize;
+    iconWithShadow.width  = imageSize;
     iconWithShadow.height = imageSize;
     iconWithShadowContext.drawImage(canvas, 0, 0);
 
@@ -259,21 +259,19 @@ function drawShadow(canvas, degree) {
 
     //set image trail to shadow color
     for (var i = 0, n = data.length; i < n; i += 4) {
+        data[i] = oldData[i];
+        data[i + 1] = oldData[i + 1];
+        data[i + 2] = oldData[i + 2];
+      
         var alpha = data[i + 3] / 255;
         var oldAlpha = oldData[i + 3] / 255;
-
-        if (alpha > 0) {
-            if (oldAlpha > 0) {
-                data[i] = (oldData[i] + (1 - shadowOpacity) * 0);
-                data[i + 1] = (oldData[i + 1] + (1 - shadowOpacity) * 0);
-                data[i + 2] = (oldData[i + 2] + (1 - shadowOpacity) * 0);
-                data[i + 3] = (oldData[i + 3] + (1 - shadowOpacity) * data[i + 3]);
-            } else {
-                data[i] = 0;
-                data[i + 1] = 0;
-                data[i + 2] = 0;
-                data[i + 3] = data[i + 3] * shadowOpacity;
-            }
+        //if solid on o.g. icon and shadow, leave it
+        if (alpha == 1 && oldAlpha == 1) {
+            data[i + 3] = oldData[i + 3];
+        } 
+        //else, transparentize it
+        else {
+            data[i + 3] = oldData[i + 3] + (shadowOpacity * data[i + 3]);
         }
     }
     iconWithShadowContext.putImageData(imageData, 0, 0);
@@ -282,7 +280,7 @@ function drawShadow(canvas, degree) {
 }
 
 //merges icon canvas with circle canvas
-function mergeIconWithBackground(iconCanvas, circleCanvas) {
+function mergeIconWithBackground(iconCanvas, backgroundCanvas) {
     var imageSize = iconCanvas.width;
 
     //get icon data
@@ -290,44 +288,46 @@ function mergeIconWithBackground(iconCanvas, circleCanvas) {
     var iconImageData = iconContext.getImageData(0, 0, imageSize, imageSize);
     var iconData = iconImageData.data;
 
-    //get circle data
-    var circleContext = circleCanvas.getContext('2d');
-    var circleImageData = circleContext.getImageData(0, 0, imageSize, imageSize);
-    var circleData = circleImageData.data;
+    //get background data
+    var backgroundContext = backgroundCanvas.getContext('2d');
+    var backgroundImageData = backgroundContext.getImageData(0, 0, imageSize, imageSize);
+    var backgroundData = backgroundImageData.data;
 
     // iterate over all pixels
-    for (var i = 0, n = circleData.length; i < n; i += 4) {
+    for (var i = 0, n = backgroundData.length; i < n; i += 4) {
         //get alpha channels
         var iconAlpha = iconData[i + 3] / 255;
-        var circleAlpha = circleData[i + 3] / 255;
+        var backgroundAlpha = backgroundData[i + 3] / 255;
 
-        //if color visible on both icon and circle
-        if (circleAlpha > 0 && iconAlpha > 0) {
+        //if color visible on both icon and background
+        if (backgroundAlpha > 0 && iconAlpha > 0) {
             //use icon colors if solid
-            if (iconAlpha == 1 && circleAlpha == 1) {
-                circleData[i] = iconData[i];
-                circleData[i + 1] = iconData[i + 1];
-                circleData[i + 2] = iconData[i + 2];
-                circleData[i + 3] = iconData[i + 3];
-            } else { //else merge if icon semi-transparent						
-                circleData[i] = (iconData[i] + (1 - iconAlpha) * circleData[i]);
-                circleData[i + 1] = (iconData[i + 1] + (1 - iconAlpha) * circleData[i + 1]);
-                circleData[i + 2] = (iconData[i + 2] + (1 - iconAlpha) * circleData[i + 2]);
-                circleData[i + 3] = (iconData[i + 3] + (1 - iconAlpha) * circleData[i + 3]);
+            if (iconAlpha == 1 && backgroundAlpha == 1) {
+                backgroundData[i] = iconData[i];
+                backgroundData[i + 1] = iconData[i + 1];
+                backgroundData[i + 2] = iconData[i + 2];
+                backgroundData[i + 3] = iconData[i + 3];
+            } 
+            //else merge if icon semi-transparent	
+            else { 					
+                backgroundData[i] = (iconData[i] + (1 - iconAlpha) * backgroundData[i]);
+                backgroundData[i + 1] = (iconData[i + 1] + (1 - iconAlpha) * backgroundData[i + 1]);
+                backgroundData[i + 2] = (iconData[i + 2] + (1 - iconAlpha) * backgroundData[i + 2]);
+                backgroundData[i + 3] = (iconData[i + 3] + (1 - iconAlpha) * backgroundData[i + 3]);
             }
         }
     }
 
-    //put icon+circle data on new canvas
+    //put icon+background data on new canvas
     var final = document.createElement('canvas');
     final.width = imageSize;
     final.height = imageSize;
-    final.getContext('2d').putImageData(circleImageData, 0, 0);
+    final.getContext('2d').putImageData(backgroundImageData, 0, 0);
 
     return final;
 }
 
-//get diameter of circle than can enclose icon
+//get diameter of circle than can enclose square icon
 function diameterForDimensions(width, height) {
     return Math.sqrt(width * width + height * height);
 }
