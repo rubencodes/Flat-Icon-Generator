@@ -17,28 +17,11 @@ body {
 .container {
     overflow: hidden;
 }
-.file-upload-box {
-	text-align: center;
-	padding: 20px;
-	width: 100%;
-	height: auto;
-	background: #eee;
-	border-color: #222;
-	border-style: dashed;
-	border-width: 1px;
-	color: #999;
-	cursor: pointer;
+canvas {
+  display: block;
+  margin: 10px auto;
 }
-#files {
-	margin: 0 auto;
-	display: none;
-}
-.thumb {
-	height: 75px;
-	border: 1px solid #000;
-	margin: 10px 5px 0 0;
-}
-#picker {
+#colorPicker {
 	color: #bbb;
 	margin: 0;
 	padding: 0;
@@ -112,6 +95,31 @@ body.dropping:after {
 .mainBody {
   padding-top: 85px;
 }
+ul#icons {
+  margin: 0px auto;
+  padding-left: 5px;
+  max-width: 700px;
+  width: 100%;
+  list-style: none;
+  text-align: left;
+  font-size: 1px;
+}
+li[class^="ion"] {
+  position: relative;
+  z-index: 0;
+  display: inline-block;
+  padding: 15px;
+  width: 42px;
+  list-style: none;
+  text-align: center;
+  font-weight: normal;
+  font-size: 32px;
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  line-height: 32px;
+}
+
 @media (max-width: 991px) {
 	#controls {
 		margin: 0 auto;

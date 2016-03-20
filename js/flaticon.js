@@ -37,6 +37,15 @@ function setupPlaceholder() {
   previewContext.fillText("PREVIEW", 120, 150);
 }
 
+function setupIconLibrarySelectionListener() {
+  $('li[class^=ion]').click(function(e) {
+    var originalElement = e.target;
+    var imageName = originalElement.classList[0].slice(4);
+    $('#IconLibraryModal').modal('hide');
+    generateFlatIconFromImage("/img/ionicons/" + imageName + ".png");
+  });
+}
+
 //load image at a data URL
 function generateFlatIconFromImage(dataURL) {
     loadToCanvas(dataURL, function (image) {
@@ -469,3 +478,4 @@ shapePicker.onchange = function () {
 /* Setup 'Preview' text as placeholder in canvas*/
 setupPlaceholder();
 setupFileListener();
+setupIconLibrarySelectionListener();

@@ -21,6 +21,7 @@
 	<link rel="apple-touch-icon" sizes="152x152" href="/img/mobile/ios/152.png">
   
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 	<link rel="stylesheet" href="css/libraries.min.css">
 
 	<!--[if IE]>
@@ -33,24 +34,15 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
-                <button class="btn btn-danger navbar-btn uploadButton hidden-sm hidden-md hidden-lg hidden-xl" onclick="triggerFileUpload()">
-                  <span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload
-                </button>
-                <img id="brand-img" class="hidden-phone" src="img/favicon.png" width="50" height="50">
+                <img id="brand-img" src="img/favicon.png" width="50" height="50">
                 <a class="navbar-brand" href="#" style="margin-left:0;">Flat Icon <span class="hidden-xs">Generator</span></a>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="hidden-xs">
                         <a class="navbar-link" href="https://github.com/rubencodes/Flat-Icon-Generator" class="btn btn-primary btn-block" target="_blank">
-                          About
+                          GitHub
                         </a>
-                    </li>
-                    <li class="hidden-xs">&nbsp;&nbsp;</li>
-                    <li class="hidden-xs">
-                        <button class="btn btn-danger navbar-btn uploadButton" onclick="triggerFileUpload()">
-                            <span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload
-                        </button>
                     </li>
                 </ul>
             </div>
@@ -151,14 +143,80 @@
                         </th>
                     </tr>
                 </table>
-                <h6 style="color:gray;">Need icon images? <a href="http://ionicons.com/" target="_blank">Check out Ionicons!</a> Or, <a href="img/bolt.png" download>download this sample icon</a>.</h6>
             </div>
             <div class="col-md-4" style="text-align:center;">
+                <button class="btn btn-danger" onclick="triggerFileUpload()">
+                  <span class="ion-android-upload"></span>&nbsp;&nbsp;Upload an Icon
+                </button>&nbsp;&nbsp;
+                <button class="btn btn-primary" data-toggle="modal" data-target="#IconLibraryModal">
+                  Pick an Icon
+                </button>
                 <canvas id="canvas" height="300" width="300"></canvas>
-                <br>
-                <a id="download" class="btn btn-primary disabled" onclick="downloadIcon(this)">Click to Download</a>
+                <a id="download" class="btn btn-primary disabled" onclick="downloadIcon(this)"><span class="ion-android-download"></span> Download</a>
             </div>
         </div>
+    </div>
+    <div class="modal fade" id="IconLibraryModal" tabindex="-1" role="dialog" aria-labelledby="Icon Library">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Select an Icon</h4>
+          </div>
+          <div class="modal-body">
+            <ul id="icons">
+                <li class="ion-checkmark"></li>
+                <li class="ion-checkmark-circled"></li>
+                <li class="ion-close"></li>
+                <li class="ion-close-circled"></li>
+                <li class="ion-plus"></li>
+                <li class="ion-plus-circled"></li>
+                <li class="ion-minus"></li>
+                <li class="ion-minus-circled"></li>
+                <li class="ion-help-buoy"></li>
+                <li class="ion-asterisk"></li>
+                <li class="ion-home"></li>
+                <li class="ion-search"></li>
+                <li class="ion-star"></li>
+                <li class="ion-heart"></li>
+                <li class="ion-gear-a"></li>
+                <li class="ion-gear-b"></li>
+                <li class="ion-wrench"></li>
+                <li class="ion-hammer"></li>
+                <li class="ion-edit"></li>
+                <li class="ion-trash-a"></li>
+                <li class="ion-trash-b"></li>
+                <li class="ion-document"></li>
+                <li class="ion-document-text"></li>
+                <li class="ion-clipboard"></li>
+                <li class="ion-paper-airplane"></li>
+                <li class="ion-medkit"></li>
+                <li class="ion-cloud"></li>
+                <li class="ion-navigate"></li>
+                <li class="ion-location"></li>
+                <li class="ion-chatbubbles"></li>
+                <li class="ion-chatbox"></li>
+                <li class="ion-chatboxes"></li>
+                <li class="ion-person"></li>
+                <li class="ion-coffee"></li>
+                <li class="ion-flash"></li>
+                <li class="ion-monitor"></li>
+                <li class="ion-laptop"></li>
+                <li class="ion-happy"></li>
+                <li class="ion-sad"></li>
+                <li class="ion-bowtie"></li>
+                <li class="ion-planet"></li>
+                <li class="ion-lightbulb"></li>
+                <li class="ion-cube"></li>
+                <li class="ion-flame"></li>
+                <li class="ion-fireball"></li>
+                <li class="ion-umbrella"></li>
+                <li class="ion-model-s"></li>
+                <li class="ion-plane"></li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
 	<br>
 	<footer>
