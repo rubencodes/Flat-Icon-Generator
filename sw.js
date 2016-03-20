@@ -8,14 +8,15 @@ importScripts('/js/sw-toolbox/sw-toolbox.js');
 toolbox.router.default = toolbox.fastest;
 toolbox.router.any('/(.*)', toolbox.cacheFirst, { origin: 'https://ajax.googleapis.com' });
 toolbox.router.any('/(.*)', toolbox.cacheFirst, { origin: 'https://maxcdn.bootstrapcdn.com' });
+toolbox.router.any('/(.*)', toolbox.cacheFirst, { origin: 'https://code.ionicframework.com/' });
 
 const urlsToCache = [
   '/index.html',
   '/sw_install.js',
   '/sw.js',
   '/js/sw-toolbox/sw-toolbox.js',
-  '/js/libraries.min.js',
-  '/css/libraries.min.css',
+  '/js/libraries_1.1.min.js',
+  '/css/libraries_1.1.min.css',
   '/img/bolt.png',
   '/img/favicon.png'
 ];
