@@ -28,24 +28,6 @@ var lastUnmergedIconCanvas; //most recently uploaded icon after shadow
 var lastMergedIconCanvas; //most recently uploaded icon after merging
 var lastScaleFactor; //most recently used scale factor
 
-//setup preview canvas placeholder
-function setupPlaceholder() {
-  previewContext.fillStyle = "rgb(200, 200, 200)";
-  previewContext.fillRect(0, 0, previewCanvas.width, previewCanvas.height);
-  previewContext.fillStyle = "rgb(150, 150, 150)";
-  previewContext.font = "16px Helvetica";
-  previewContext.fillText("PREVIEW", 120, 150);
-}
-
-function setupIconLibrarySelectionListener() {
-  $('li[class^=ion]').click(function(e) {
-    var originalElement = e.target;
-    var imageName = originalElement.classList[0].slice(4);
-    $('#IconLibraryModal').modal('hide');
-    generateFlatIconFromImage("/img/ionicons/" + imageName + ".png");
-  });
-}
-
 //load image at a data URL
 function generateFlatIconFromImage(dataURL) {
     loadToCanvas(dataURL, function (image) {
@@ -343,7 +325,7 @@ function diameterForDimensions(width, height) {
 
 /* FILE API */
 function handleFileSelect(evt) {
-    handleDragExit();
+    handleDragExit(evt);
     evt.stopPropagation();
     evt.preventDefault();
 
@@ -373,18 +355,23 @@ function handleFileSelect(evt) {
     }
 }
 
-function handleDragOver(evt) {
-    handleDragEnter();
-    evt.stopPropagation();
-    evt.preventDefault();
-    evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+var counter = 0;
+function handleDragEnter(evt) {
+  cancelEvent(evt);
+  counter++;
+  
+  document.getElementById('drop_zone').classList.add('dropping');
 }
-
-function handleDragEnter() {
-    document.getElementById('drop_zone').classList.add('dropping');
-}
-function handleDragExit() {
+function handleDragExit(evt) {
+  cancelEvent(evt);
+  counter--;
+  
+  if (counter === 0) {
     document.getElementById('drop_zone').classList.remove('dropping');
+  }
+}
+function cancelEvent(evt) {
+  evt.preventDefault();
 }
 
 //manually trigger file upload button
@@ -392,90 +379,116 @@ function triggerFileUpload() {
     document.getElementById('files').click();
 }
 
+/* END FILE API */
+
+//setup controls for settings
+function initControls() {
+  /* COLOR PICKER */
+  $(colorPicker).colpick({
+      color: defaultIconColor,
+      layout: 'hex',
+      submit: 0,
+      colorScheme: 'dark',
+      onChange: function (hsb, hex, rgb, el, bySetColor) {
+          $(el).css('border-color', '#' + hex);
+          defaultIconColor = "#" + hex;
+          updateCurrentBackground();
+
+          // Fill the text box just if the color was set using the picker, and not the colpickSetColor function.
+          if (!bySetColor) $(el).val(hex);
+      }
+  }).keyup(function () {
+      $(this).colpickSetColor(this.value);
+  });
+  /* END COLOR PICKER */
+
+  /* INIT OPACITY SLIDER */
+  $(opacityPicker).rangeslider({
+      polyfill: false,
+
+      // Callback function
+      onSlide: function (position, value) {
+          updateCurrentShadow();
+      }
+  });
+  /* END INIT SLIDER */
+
+  /* INIT LENGTH SLIDER */
+  $(lengthPicker).rangeslider({
+      polyfill: false,
+
+      // Callback function
+      onSlide: function (position, value) {
+          updateCurrentShadow();
+      }
+  });
+  /* END INIT SLIDER */
+
+  /* INIT ANGLE SLIDER */
+  $(anglePicker).rangeslider({
+      polyfill: false,
+
+      // Callback function
+      onSlide: function (position, value) {
+          updateCurrentShadow();
+      }
+  });
+  /* END INIT SLIDER */
+
+  /* INIT PADDING SLIDER */
+  $(paddingPicker).rangeslider({
+      polyfill: false,
+
+      // Callback function
+      onSlide: function (position, value) {
+          updateCurrentPadding()
+      }
+  });
+  /* END INIT SLIDER */
+
+  /* INIT SHAPE PICKER */
+  shapePicker.onchange = function () {
+      updateCurrentBackground();
+  };
+  /* END INIT SWITCH */
+}
+
+//setup preview canvas placeholder
+function setupPlaceholder() {
+  previewContext.fillStyle = "rgb(200, 200, 200)";
+  previewContext.fillRect(0, 0, previewCanvas.width, previewCanvas.height);
+  previewContext.fillStyle = "rgb(150, 150, 150)";
+  previewContext.font = "16px Helvetica";
+  previewContext.fillText("PREVIEW", 120, 150);
+}
+
+//listen for icons selected form Icon Library
+function setupIconLibrarySelectionListener() {
+  $('li[class^=ion]').click(function(e) {
+    var originalElement = e.target;
+    var imageName = originalElement.classList[0].slice(4);
+    $('#IconLibraryModal').modal('hide');
+    generateFlatIconFromImage("/img/ionicons/" + imageName + ".png");
+  });
+}
+
+//listen for files being uploaded
 function setupFileListener() {
-  //setup drop zone for icons
+  //setup drop zone for receiving dropped icons
   var dropZone = document.getElementById('drop_zone');
-  dropZone.addEventListener('dragexit', handleDragExit, false);
+  dropZone.addEventListener('dragover', cancelEvent, false);
+  dropZone.addEventListener('dragenter', handleDragEnter, false);
   dropZone.addEventListener('dragleave', handleDragExit, false);
   dropZone.addEventListener('drop', handleFileSelect, false);
   
-  dropZone.addEventListener('dragenter', handleDragEnter, false);
-  dropZone.addEventListener('dragover', handleDragOver, false);
+  //when a file is uploaded, handle it
   document.getElementById('files').addEventListener('change', handleFileSelect, false);
 }
 
-/* END FILE API */
-
-/* COLOR PICKER */
-$(colorPicker).colpick({
-    color: defaultIconColor,
-    layout: 'hex',
-    submit: 0,
-    colorScheme: 'dark',
-    onChange: function (hsb, hex, rgb, el, bySetColor) {
-        $(el).css('border-color', '#' + hex);
-        defaultIconColor = "#" + hex;
-        updateCurrentBackground();
-
-        // Fill the text box just if the color was set using the picker, and not the colpickSetColor function.
-        if (!bySetColor) $(el).val(hex);
-    }
-}).keyup(function () {
-    $(this).colpickSetColor(this.value);
-});
-/* END COLOR PICKER */
-
-/* INIT OPACITY SLIDER */
-$(opacityPicker).rangeslider({
-    polyfill: false,
-
-    // Callback function
-    onSlide: function (position, value) {
-        updateCurrentShadow();
-    }
-});
-/* END INIT SLIDER */
-
-/* INIT LENGTH SLIDER */
-$(lengthPicker).rangeslider({
-    polyfill: false,
-
-    // Callback function
-    onSlide: function (position, value) {
-        updateCurrentShadow();
-    }
-});
-/* END INIT SLIDER */
-
-/* INIT ANGLE SLIDER */
-$(anglePicker).rangeslider({
-    polyfill: false,
-
-    // Callback function
-    onSlide: function (position, value) {
-        updateCurrentShadow();
-    }
-});
-/* END INIT SLIDER */
-
-/* INIT PADDING SLIDER */
-$(paddingPicker).rangeslider({
-    polyfill: false,
-
-    // Callback function
-    onSlide: function (position, value) {
-        updateCurrentPadding()
-    }
-});
-/* END INIT SLIDER */
-
-/* INIT SHAPE PICKER */
-shapePicker.onchange = function () {
-    updateCurrentBackground();
-};
-/* END INIT SWITCH */
-
 /* Setup 'Preview' text as placeholder in canvas*/
-setupPlaceholder();
-setupFileListener();
-setupIconLibrarySelectionListener();
+window.addEventListener('load', function() {
+  initControls();
+  setupPlaceholder();
+  setupFileListener();
+  setupIconLibrarySelectionListener();
+});
