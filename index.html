@@ -1,46 +1,46 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang=''>
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset='UTF-8'>
+	<meta name='viewport' content='width=device-width, initial-scale=1.0'>
 	<title>Flat Icon Generator</title>
-	<link rel="shortcut icon" href="img/favicon.png">
+	<link rel='shortcut icon' href='img/favicon.png'>
   
-  	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="mobile-web-app-capable" content="yes">
-	<meta name="theme-color" content="#2196f3">
-	<meta name="msapplication-navbutton-color" content="#2196f3">
-	<meta name="author" content="Ruben Martinez Jr. (@RubenCodes)">
-	<meta name="description" content="Add a background & shadow to any icon, freely and easily. It even works offline!" />
+  	<meta name='apple-mobile-web-app-capable' content='yes'>
+	<meta name='mobile-web-app-capable' content='yes'>
+	<meta name='theme-color' content='#2196f3'>
+	<meta name='msapplication-navbutton-color' content='#2196f3'>
+	<meta name='author' content='Ruben Martinez Jr. (@RubenCodes)'>
+	<meta name='description' content='Add a background & shadow to any icon, freely and easily. It even works offline!' />
 
-	<link rel="manifest" href="/manifest.json">
-	<link rel="apple-touch-icon" href="/img/mobile/ios/60.png">
-	<link rel="apple-touch-icon" sizes="76x76" href="/img/mobile/ios/76.png">
-	<link rel="apple-touch-icon" sizes="120x120" href="/img/mobile/ios/120.png">
-	<link rel="apple-touch-icon" sizes="152x152" href="/img/mobile/ios/152.png">
+	<link rel='manifest' href='/manifest.json'>
+	<link rel='apple-touch-icon' href='/img/mobile/ios/60.png'>
+	<link rel='apple-touch-icon' sizes='76x76' href='/img/mobile/ios/76.png'>
+	<link rel='apple-touch-icon' sizes='120x120' href='/img/mobile/ios/120.png'>
+	<link rel='apple-touch-icon' sizes='152x152' href='/img/mobile/ios/152.png'>
   
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-	<link rel="stylesheet" href="css/libraries_1.1.min.css">
+	<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
+	<link rel='stylesheet' href='https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'>
+	<link rel='stylesheet' href='css/libraries_1.1.min.css'>
 
 	<!--[if IE]>
-        <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
+        <script src='https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js'></script>
+        <script src='https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js'></script>
     <![endif]-->
 </head>
 
-<body id="drop_zone" style="min-height: 100vh;">
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <img id="brand-img" src="img/favicon.png" width="50" height="50">
-                <a class="navbar-brand" href="#" style="margin-left:0;">Flat Icon <span class="hidden-xs">Generator</span></a>
+<body id='drop_zone' style='min-height: 100vh;'>
+    <nav class='navbar navbar-inverse navbar-fixed-top' role='navigation'>
+        <div class='container'>
+            <div class='navbar-header'>
+                <img id='brand-img' src='img/favicon.png' width='50' height='50'>
+                <a class='navbar-brand' href='#' style='margin-left:0;'>Flat Icon <span class='hidden-xs'>Generator</span></a>
             </div>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden-xs">
-                        <a class="navbar-link" href="https://github.com/rubencodes/Flat-Icon-Generator" class="btn btn-primary btn-block" target="_blank">
+            <div class='collapse navbar-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                    <li class='hidden-xs'>
+                        <a class='navbar-link' href='https://github.com/rubencodes/Flat-Icon-Generator' class='btn btn-primary btn-block' target='_blank'>
                           GitHub
                         </a>
                     </li>
@@ -48,11 +48,11 @@
             </div>
         </div>
     </nav>
-    <input type="file" id="files" name="files[]" />
-    <div class="container mainBody">
-        <div class="row">
-            <div class="col-md-8" id="left-side">
-                <table id="controls">
+    <input type='file' id='files' name='files[]' />
+    <div class='container mainBody'>
+        <div class='row'>
+            <div class='col-md-8' id='left-side'>
+                <table id='controls'>
                     <tr>
                         <th>
                             <h4>Icon</h4>
@@ -63,10 +63,10 @@
                             <h5>Shape:</h5>
                         </th>
                         <th></th>
-                        <th style="max-width: 150px;">
-                            <select id="shapePicker" class="form-control">
-                              <option value="circle">Circle</option>
-                              <option value="square">Square</option>
+                        <th style='max-width: 150px;'>
+                            <select id='shapePicker' class='form-control'>
+                              <option value='circle'>Circle</option>
+                              <option value='square'>Square</option>
                             </select>
                         </th>
                     </tr>
@@ -77,8 +77,8 @@
                         <th>
                             <h5>#&nbsp;</h5>
                         </th>
-                        <th style="max-width: 150px;">
-                            <input type="text" id="colorPicker" value="1abc9c" maxlength="6"></input>
+                        <th style='max-width: 150px;'>
+                            <input type='text' id='colorPicker' value='1abc9c' maxlength='6'></input>
                         </th>
                     </tr>
                     <tr>
@@ -89,7 +89,7 @@
                             <h5>0&nbsp;</h5>
                         </th>
                         <th>
-                            <input id="paddingPicker" type="range" min="0.00" max="1.00" step="0.01" value="0.00">
+                            <input id='paddingPicker' type='range' min='0.00' max='1.00' step='0.01' value='0.00'>
                         </th>
                         <th>
                             <h5>&nbsp;100%</h5>
@@ -108,7 +108,7 @@
                             <h5>0&nbsp;</h5>
                         </th>
                         <th>
-                            <input id="anglePicker" type="range" min="0" max="90" step="1" value="45">
+                            <input id='anglePicker' type='range' min='0' max='90' step='1' value='45'>
                         </th>
                         <th>
                             <h5>&nbsp;90&deg;</h5>
@@ -122,7 +122,7 @@
                             <h5>0&nbsp;</h5>
                         </th>
                         <th>
-                            <input id="opacityPicker" type="range" min="0.00" max="1.00" step="0.01" value="0.30">
+                            <input id='opacityPicker' type='range' min='0.00' max='1.00' step='0.01' value='0.30'>
                         </th>
                         <th>
                             <h5>&nbsp;100%</h5>
@@ -136,7 +136,7 @@
                             <h5>0&nbsp;</h5>
                         </th>
                         <th>
-                            <input id="lengthPicker" type="range" min="0.00" max="1.00" step="0.01" value="1.00">
+                            <input id='lengthPicker' type='range' min='0.00' max='1.00' step='0.01' value='1.00'>
                         </th>
                         <th>
                             <h5>&nbsp;100%</h5>
@@ -144,76 +144,76 @@
                     </tr>
                 </table>
             </div>
-            <div class="col-md-4" style="text-align:center;">
-                <button class="btn btn-danger" onclick="triggerFileUpload()">
-                  <span class="ion-android-upload"></span>&nbsp;&nbsp;Upload an Icon
+            <div class='col-md-4' style='text-align:center;'>
+                <button class='btn btn-danger' onclick='triggerFileUpload()'>
+                  <span class='ion-android-upload'></span>&nbsp;&nbsp;Upload an Icon
                 </button>&nbsp;&nbsp;
-                <button class="btn btn-primary" data-toggle="modal" data-target="#IconLibraryModal">
+                <button class='btn btn-primary' data-toggle='modal' data-target='#IconLibraryModal'>
                   Pick an Icon
                 </button><br />
                 <small>Recommended Size: 512x512</small>
-                <canvas id="canvas" height="300" width="300"></canvas>
-                <a id="download" class="btn btn-primary disabled" onclick="downloadIcon(this)"><span class="ion-android-download"></span> Download</a>
+                <canvas id='canvas' height='300' width='300'></canvas>
+                <a id='download' class='btn btn-primary disabled' onclick='downloadIcon(this)'><span class='ion-android-download'></span> Download</a>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="IconLibraryModal" tabindex="-1" role="dialog" aria-labelledby="Icon Library">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Select an Icon</h4>
+    <div class='modal fade' id='IconLibraryModal' tabindex='-1' role='dialog' aria-labelledby='Icon Library'>
+      <div class='modal-dialog' role='document'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+            <h4 class='modal-title' id='myModalLabel'>Select an Icon</h4>
           </div>
-          <div class="modal-body">
-            <ul id="icons">
-                <li class="ion-checkmark"></li>
-                <li class="ion-checkmark-circled"></li>
-                <li class="ion-close"></li>
-                <li class="ion-close-circled"></li>
-                <li class="ion-plus"></li>
-                <li class="ion-plus-circled"></li>
-                <li class="ion-minus"></li>
-                <li class="ion-minus-circled"></li>
-                <li class="ion-help-buoy"></li>
-                <li class="ion-asterisk"></li>
-                <li class="ion-home"></li>
-                <li class="ion-search"></li>
-                <li class="ion-star"></li>
-                <li class="ion-heart"></li>
-                <li class="ion-gear-a"></li>
-                <li class="ion-gear-b"></li>
-                <li class="ion-wrench"></li>
-                <li class="ion-hammer"></li>
-                <li class="ion-edit"></li>
-                <li class="ion-trash-a"></li>
-                <li class="ion-trash-b"></li>
-                <li class="ion-document"></li>
-                <li class="ion-document-text"></li>
-                <li class="ion-clipboard"></li>
-                <li class="ion-paper-airplane"></li>
-                <li class="ion-medkit"></li>
-                <li class="ion-cloud"></li>
-                <li class="ion-navigate"></li>
-                <li class="ion-location"></li>
-                <li class="ion-chatbubbles"></li>
-                <li class="ion-chatbox"></li>
-                <li class="ion-chatboxes"></li>
-                <li class="ion-person"></li>
-                <li class="ion-coffee"></li>
-                <li class="ion-flash"></li>
-                <li class="ion-monitor"></li>
-                <li class="ion-laptop"></li>
-                <li class="ion-happy"></li>
-                <li class="ion-sad"></li>
-                <li class="ion-bowtie"></li>
-                <li class="ion-planet"></li>
-                <li class="ion-lightbulb"></li>
-                <li class="ion-cube"></li>
-                <li class="ion-flame"></li>
-                <li class="ion-fireball"></li>
-                <li class="ion-umbrella"></li>
-                <li class="ion-model-s"></li>
-                <li class="ion-plane"></li>
+          <div class='modal-body'>
+            <ul id='icons'>
+                <li class='ion-checkmark'></li>
+                <li class='ion-checkmark-circled'></li>
+                <li class='ion-close'></li>
+                <li class='ion-close-circled'></li>
+                <li class='ion-plus'></li>
+                <li class='ion-plus-circled'></li>
+                <li class='ion-minus'></li>
+                <li class='ion-minus-circled'></li>
+                <li class='ion-help-buoy'></li>
+                <li class='ion-asterisk'></li>
+                <li class='ion-home'></li>
+                <li class='ion-search'></li>
+                <li class='ion-star'></li>
+                <li class='ion-heart'></li>
+                <li class='ion-gear-a'></li>
+                <li class='ion-gear-b'></li>
+                <li class='ion-wrench'></li>
+                <li class='ion-hammer'></li>
+                <li class='ion-edit'></li>
+                <li class='ion-trash-a'></li>
+                <li class='ion-trash-b'></li>
+                <li class='ion-document'></li>
+                <li class='ion-document-text'></li>
+                <li class='ion-clipboard'></li>
+                <li class='ion-paper-airplane'></li>
+                <li class='ion-medkit'></li>
+                <li class='ion-cloud'></li>
+                <li class='ion-navigate'></li>
+                <li class='ion-location'></li>
+                <li class='ion-chatbubbles'></li>
+                <li class='ion-chatbox'></li>
+                <li class='ion-chatboxes'></li>
+                <li class='ion-person'></li>
+                <li class='ion-coffee'></li>
+                <li class='ion-flash'></li>
+                <li class='ion-monitor'></li>
+                <li class='ion-laptop'></li>
+                <li class='ion-happy'></li>
+                <li class='ion-sad'></li>
+                <li class='ion-bowtie'></li>
+                <li class='ion-planet'></li>
+                <li class='ion-lightbulb'></li>
+                <li class='ion-cube'></li>
+                <li class='ion-flame'></li>
+                <li class='ion-fireball'></li>
+                <li class='ion-umbrella'></li>
+                <li class='ion-model-s'></li>
+                <li class='ion-plane'></li>
             </ul>
           </div>
         </div>
@@ -221,12 +221,12 @@
     </div>
 	<br>
 	<footer>
-		Copyright &copy; 2015 <a href="http://ruben.codes/" target="_blank">Ruben.Codes</a>
+		Copyright &copy; 2015 <a href='http://ruben.codes/' target='_blank'>Ruben.Codes</a>
 	</footer>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-	<script src="js/libraries_1.1.min.js"></script>
-	<script src="/sw_install.js" async></script>
+	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+	<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js'></script>
+	<script src='js/libraries_1.1.min.js'></script>
+	<script src='/sw_install.js' async></script>
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

@@ -1,32 +1,30 @@
 //canvas+context where preview is generated
-var previewCanvas  = document.getElementById("canvas");
-var previewContext = canvas.getContext("2d");
-
-//button for downloading icon
-var downloadButton = document.getElementById("download");
+var previewCanvas  = document.getElementById('canvas');
+var previewContext = canvas.getContext('2d');
 
 //controls
-var colorPicker   = document.getElementById('colorPicker');
-var shapePicker   = document.getElementById('shapePicker');
-var paddingPicker = document.getElementById("paddingPicker");
-var anglePicker   = document.getElementById('anglePicker');
-var opacityPicker = document.getElementById("opacityPicker");
-var lengthPicker  = document.getElementById("lengthPicker");
+var downloadButton = document.getElementById('download');
+var colorPicker    = document.getElementById('colorPicker');
+var shapePicker    = document.getElementById('shapePicker');
+var paddingPicker  = document.getElementById('paddingPicker');
+var anglePicker    = document.getElementById('anglePicker');
+var opacityPicker  = document.getElementById('opacityPicker');
+var lengthPicker   = document.getElementById('lengthPicker');
 
-var defaultIconColor = "hsl(168, 76%, 42%)"; //default color for background
+//defaults
 var downloadDisabled = true; //has an image been uploaded yet?
-var shadowOpacity    = 0.3; //opacity for shadow
-var shadowLength     = 1; //length of shadow
-var shadowAngle      = 45; //opacity for shadow
-var padding          = 0; //percent padding for icon (0 - 1.0)
+var iconBackground   = 'hsl(168, 76%, 42%)'; //default color for background
+var shadowOpacity    = 0.3;  //opacity for shadow
+var shadowLength     = 1;    //length of shadow
+var shadowAngle      = 45;   //opacity for shadow
+var padding          = 0;    //percent padding for icon (0 - 1.0)
 
-//keep memory of canvases
-var lastCroppedIconCanvas; //most recently uploaded icon after cropping
-var lastIconBackground; //most recently generated circle canvas
-var lastPaddedIconCanvas; //most recently uploaded icon after padding
-var lastUnmergedIconCanvas; //most recently uploaded icon after shadow
-var lastMergedIconCanvas; //most recently uploaded icon after merging
-var lastScaleFactor; //most recently used scale factor
+//memory of canvases (avoid redrawing where possible)
+var lastCroppedIconCanvas;  //foreground after cropping
+var lastPaddedIconCanvas;   //foreground after padding
+var lastUnmergedIconCanvas; //foreground after shadow
+var lastIconBackground;     //background canvas
+var lastMergedIconCanvas;   //foreground + background
 
 //load image at a data URL
 function generateFlatIconFromImage(dataURL) {
@@ -34,9 +32,10 @@ function generateFlatIconFromImage(dataURL) {
         lastCroppedIconCanvas = cropVisibleImageToNewCanvas(image);
         var widthWithPadding  = lastCroppedIconCanvas.width  * padding + lastCroppedIconCanvas.width;
         var heightWithPadding = lastCroppedIconCanvas.height * padding + lastCroppedIconCanvas.height;
-        lastIconBackground    = createIconBackground(diameterForDimensions(widthWithPadding, heightWithPadding));
-        lastPaddedIconCanvas  = centerCanvas(lastCroppedIconCanvas, lastIconBackground.width, lastIconBackground.height);
-        lastUnmergedIconCanvas = drawShadow(lastPaddedIconCanvas, shadowAngle);
+        var iconDiameter      = diameterForDimensions(widthWithPadding, heightWithPadding);
+        lastIconBackground    = createIconBackground(iconDiameter);
+        lastPaddedIconCanvas  = centerCanvas(lastCroppedIconCanvas, iconDiameter, iconDiameter);
+        lastUnmergedIconCanvas = drawShadow(lastPaddedIconCanvas);
         lastMergedIconCanvas   = mergeIconWithBackground(lastUnmergedIconCanvas, lastIconBackground);
       
         //update the icon preview
@@ -44,7 +43,7 @@ function generateFlatIconFromImage(dataURL) {
 
         //reenable download option
         if (downloadDisabled) {
-            downloadButton.classList.remove("disabled");
+            downloadButton.classList.remove('disabled');
             downloadDisabled = false;
         }
     });
@@ -53,12 +52,15 @@ function generateFlatIconFromImage(dataURL) {
 function updateCurrentPadding() {
     padding = paddingPicker.value;
     if (lastCroppedIconCanvas != null) {
-        var widthWithPadding = lastCroppedIconCanvas.width * padding + lastCroppedIconCanvas.width;
+        var widthWithPadding  = lastCroppedIconCanvas.width  * padding + lastCroppedIconCanvas.width;
         var heightWithPadding = lastCroppedIconCanvas.height * padding + lastCroppedIconCanvas.height;
-        lastIconBackground = createIconBackground(diameterForDimensions(widthWithPadding, heightWithPadding));
-        lastPaddedIconCanvas = centerCanvas(lastCroppedIconCanvas, lastIconBackground.width, lastIconBackground.height);
-        lastUnmergedIconCanvas = drawShadow(lastPaddedIconCanvas, anglePicker.value);
-        lastMergedIconCanvas = mergeIconWithBackground(lastUnmergedIconCanvas, lastIconBackground);
+        var iconDiameter      = diameterForDimensions(widthWithPadding, heightWithPadding);
+        lastIconBackground    = createIconBackground(iconDiameter);
+        lastPaddedIconCanvas  = centerCanvas(lastCroppedIconCanvas, iconDiameter, iconDiameter);
+        lastUnmergedIconCanvas = drawShadow(lastPaddedIconCanvas);
+        lastMergedIconCanvas   = mergeIconWithBackground(lastUnmergedIconCanvas, lastIconBackground);
+      
+        //update the icon preview
         updatePreview();
     }
 }
@@ -69,29 +71,32 @@ function updateCurrentShadow() {
     shadowLength  = lengthPicker.value;
 
     if (lastPaddedIconCanvas != null) {
-        lastUnmergedIconCanvas = drawShadow(lastPaddedIconCanvas, shadowAngle);
-        lastMergedIconCanvas = mergeIconWithBackground(lastUnmergedIconCanvas, lastIconBackground);
+        lastUnmergedIconCanvas = drawShadow(lastPaddedIconCanvas);
+        lastMergedIconCanvas   = mergeIconWithBackground(lastUnmergedIconCanvas, lastIconBackground);
+      
+        //update the icon preview
         updatePreview();
     }
 }
 
 function updateCurrentBackground() {
     if (lastUnmergedIconCanvas != null) {
-        lastIconBackground = createIconBackground(lastUnmergedIconCanvas.width);
+        lastIconBackground   = createIconBackground(lastIconBackground.width);
         lastMergedIconCanvas = mergeIconWithBackground(lastUnmergedIconCanvas, lastIconBackground);
+      
+        //update the icon preview
         updatePreview();
     }
 }
 
 function updatePreview() {
-    //reset canvas
-    previewContext.scale(1 / lastScaleFactor, 1 / lastScaleFactor);
+    //reset canvas scale & contents
+    previewContext.setTransform(1, 0, 0, 1, 0, 0);
     previewContext.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
 
     //fit icon to canvas and draw 
-    lastScaleFactor = previewCanvas.width / lastMergedIconCanvas.width;
-    previewContext.scale(lastScaleFactor, lastScaleFactor);
-
+    var scaleFactor = previewCanvas.width / lastMergedIconCanvas.width;
+    previewContext.scale(scaleFactor, scaleFactor);
     previewContext.drawImage(lastMergedIconCanvas, 0, 0);
 }
 
@@ -99,7 +104,7 @@ function downloadIcon(link) {
     if (!downloadDisabled) {
         //set link properties
         link.href = lastMergedIconCanvas.toDataURL();
-        link.download = "icon.png";
+        link.download = 'icon.png';
     }
 }
 
@@ -182,7 +187,7 @@ function createIconBackground(size) {
     var context = iconBackgroundCanvas.getContext('2d');
 
     //set icon background color
-    context.fillStyle = defaultIconColor;
+    context.fillStyle = iconBackground;
 
     //draw circle or square icon depending on setting
     if (shapePicker.value == 'circle') {
@@ -213,23 +218,24 @@ function centerCanvas(canvas, width, height) {
 }
 
 //draws shadow on an icon canvas
-function drawShadow(canvas, degree) {
-    //get canvas data and info on where to draw shadow
+function drawShadow(canvas) {
+    //get canvas data
     var imageSize = canvas.width;
     var context   = canvas.getContext('2d');
-    var degreesToRadians = 0.0174532925;
-    var slope = Math.tan(degree * degreesToRadians);
 
     //create new canvas to avoid modifying old
     var iconWithShadow = document.createElement('canvas');
     var iconWithShadowContext = iconWithShadow.getContext('2d');
     iconWithShadow.width  = imageSize;
     iconWithShadow.height = imageSize;
-    iconWithShadowContext.drawImage(canvas, 0, 0);
 
-    //translate image in direction of slope
+    //calculate slope of shadow
+    var degreesToRadians = 0.0174532925;
+    var slope = Math.tan(shadowAngle * degreesToRadians);
+  
+    //draw shadow at slope
     iconWithShadowContext.imageSmoothingEnabled = true;
-    for (var i = 1; i < (imageSize / 2) * shadowLength; i++) {
+    for (var i = 0; i < (imageSize / 2) * shadowLength; i++) {
         iconWithShadowContext.drawImage(canvas, i, slope * i);
         var j = (i - 1) * slope;
         if (slope * i > 1) { //if we've skipped around
@@ -254,18 +260,13 @@ function drawShadow(canvas, degree) {
         data[i + 1] = oldData[i + 1];
         data[i + 2] = oldData[i + 2];
       
-        var alpha = data[i + 3] / 255;
-        var oldAlpha = oldData[i + 3] / 255;
-        //if solid on o.g. icon and shadow, leave it
-        if (alpha == 1 && oldAlpha == 1) {
-            data[i + 3] = oldData[i + 3];
-        } 
-        //else, transparentize it
-        else {
-            data[i + 3] = oldData[i + 3] + (shadowOpacity * data[i + 3]);
-        }
+        //transparentize to shadow opacity
+        data[i + 3] = oldData[i + 3] + (shadowOpacity * data[i + 3]);
     }
     iconWithShadowContext.putImageData(imageData, 0, 0);
+    
+    //redraw o.g. image atop.
+    iconWithShadowContext.drawImage(canvas, 0, 0);
 
     return iconWithShadow;
 }
@@ -385,13 +386,13 @@ function triggerFileUpload() {
 function initControls() {
   /* COLOR PICKER */
   $(colorPicker).colpick({
-      color: defaultIconColor,
+      color: iconBackground,
       layout: 'hex',
       submit: 0,
       colorScheme: 'dark',
       onChange: function (hsb, hex, rgb, el, bySetColor) {
           $(el).css('border-color', '#' + hex);
-          defaultIconColor = "#" + hex;
+          iconBackground = '#' + hex;
           updateCurrentBackground();
 
           // Fill the text box just if the color was set using the picker, and not the colpickSetColor function.
@@ -455,11 +456,11 @@ function initControls() {
 
 //setup preview canvas placeholder
 function setupPlaceholder() {
-  previewContext.fillStyle = "rgb(200, 200, 200)";
+  previewContext.fillStyle = 'rgb(200, 200, 200)';
   previewContext.fillRect(0, 0, previewCanvas.width, previewCanvas.height);
-  previewContext.fillStyle = "rgb(150, 150, 150)";
-  previewContext.font = "16px Helvetica";
-  previewContext.fillText("PREVIEW", 120, 150);
+  previewContext.fillStyle = 'rgb(150, 150, 150)';
+  previewContext.font = '16px Helvetica';
+  previewContext.fillText('PREVIEW', 120, 150);
 }
 
 //listen for icons selected form Icon Library
@@ -468,7 +469,7 @@ function setupIconLibrarySelectionListener() {
     var originalElement = e.target;
     var imageName = originalElement.classList[0].slice(4);
     $('#IconLibraryModal').modal('hide');
-    generateFlatIconFromImage("/img/ionicons/512/" + imageName + ".png");
+    generateFlatIconFromImage('/img/ionicons/512/' + imageName + '.png');
   });
 }
 
