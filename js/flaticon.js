@@ -468,7 +468,7 @@ function setupIconLibrarySelectionListener() {
     var originalElement = e.target;
     var imageName = originalElement.classList[0].slice(4);
     $('#IconLibraryModal').modal('hide');
-    generateFlatIconFromImage("/img/ionicons/" + imageName + ".png");
+    generateFlatIconFromImage("/img/ionicons/512/" + imageName + ".png");
   });
 }
 
