@@ -47,6 +47,8 @@
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
+  "theme_color": "#2196f3",
+  "background_color": "#fefefe",
 
   "gcm_sender_id": "371291709929",
   "permissions": [
