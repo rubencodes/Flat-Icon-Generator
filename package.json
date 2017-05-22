@@ -1,0 +1,21 @@
+{
+  "name": "flat.style",
+  "version": "1.0.0",
+  "description": "Website for Flat.Style",
+  "main": "index.html",
+  "now": {
+    "name": "FlatStyle",
+    "type":"static",
+    "alias": "flat.style"
+  },
+  "dependencies": {
+    "serve": "latest"
+  },
+  "scripts": {
+    "start": "serve",
+    "deploy-now": "now --static && now alias",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ruben Martinez Jr. <ruben.martinez93@gmail.com>",
+  "license": "MIT"
+}
