@@ -20,9 +20,11 @@
 	<link rel='apple-touch-icon' sizes='120x120' href='/img/mobile/ios/120.png'>
 	<link rel='apple-touch-icon' sizes='152x152' href='/img/mobile/ios/152.png'>
 
-	<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
 	<link rel='stylesheet' href='https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'>
-	<link rel='stylesheet' href='css/libraries_1.1.min.css'>
+    <link rel='stylesheet' href='css/flat-ui.min.css'>
+    <link rel='stylesheet' href='css/rangeslider.min.css'>
+    <link rel='stylesheet' href='css/colpick.min.css'>
+	<link rel='stylesheet' href='css/default.css'>
 
 	<!--[if IE]>
         <script src='https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js'></script>
@@ -31,129 +33,86 @@
 </head>
 
 <body id='drop_zone' style='min-height: 100vh;'>
-    <nav class='navbar navbar-inverse navbar-fixed-top' role='navigation'>
-        <div class='container'>
+    <nav class='navbar' role='navigation'>
+        <div class="navbar-inner">
             <div class='navbar-header'>
-                <img id='brand-img' src='img/favicon.png' width='50' height='50'>
-                <a class='navbar-brand' href='#' style='margin-left:0;'>Flat Icon <span class='hidden-xs'>Generator</span></a>
+                <img class='navbar-header-img' src='img/favicon.png'>
+                <a class='navbar-brand' href='#'>Flat Icon <span class='hidden-xs'>Generator</span></a>
             </div>
-            <div class='collapse navbar-collapse'>
-                <ul class='nav navbar-nav navbar-right'>
-                    <li class='hidden-xs'>
-                        <a class='navbar-link' href='https://github.com/rubencodes/Flat-Icon-Generator' class='btn btn-primary btn-block' rel='noopener' target='_blank'>
-                          GitHub
-                        </a>
-                    </li>
-                </ul>
+            <div>
+                <button id='upload_button' class='btn btn-danger'>
+                    <span class='ion-android-upload'></span>&nbsp;&nbsp;Upload an Icon
+                </button>&nbsp;&nbsp;
+                <button class='btn btn-default' data-toggle='modal' data-target='#IconLibraryModal'>
+                    Pick an Icon
+                </button>
             </div>
         </div>
     </nav>
-    <input type='file' id='files' name='files[]' />
-    <div class='container mainBody'>
-        <div class='row'>
-            <div class='col-md-8' id='left-side'>
-                <table id='controls'>
-                    <tr>
-                        <th>
-                            <h4>Icon</h4>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            <h5>Shape:</h5>
-                        </th>
-                        <th></th>
-                        <th style='max-width: 150px;'>
-                            <select id='shapePicker' class='form-control'>
-                              <option value='circle'>Circle</option>
-                              <option value='square'>Square</option>
-                            </select>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            <h5>Color:</h5>
-                        </th>
-                        <th>
-                            <h5>#&nbsp;</h5>
-                        </th>
-                        <th style='max-width: 150px;'>
-                            <input type='text' id='colorPicker' value='1abc9c' maxlength='6'></input>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            <h5>Padding:</h5>
-                        </th>
-                        <th>
-                            <h5>0&nbsp;</h5>
-                        </th>
-                        <th>
-                            <input id='paddingPicker' type='range' min='0.00' max='1.00' step='0.01' value='0.00'>
-                        </th>
-                        <th>
-                            <h5>&nbsp;100%</h5>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            <h4>Shadow</h4>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            <h5>Angle:</h5>
-                        </th>
-                        <th>
-                            <h5>0&nbsp;</h5>
-                        </th>
-                        <th>
-                            <input id='anglePicker' type='range' min='0' max='90' step='1' value='45'>
-                        </th>
-                        <th>
-                            <h5>&nbsp;90&deg;</h5>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            <h5>Opacity:</h5>
-                        </th>
-                        <th>
-                            <h5>0&nbsp;</h5>
-                        </th>
-                        <th>
-                            <input id='opacityPicker' type='range' min='0.00' max='1.00' step='0.01' value='0.30'>
-                        </th>
-                        <th>
-                            <h5>&nbsp;100%</h5>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            <h5>Length:</h5>
-                        </th>
-                        <th>
-                            <h5>0&nbsp;</h5>
-                        </th>
-                        <th>
-                            <input id='lengthPicker' type='range' min='0.00' max='1.00' step='0.01' value='1.00'>
-                        </th>
-                        <th>
-                            <h5>&nbsp;100%</h5>
-                        </th>
-                    </tr>
-                </table>
-            </div>
-            <div class='col-md-4' style='text-align:center;'>
-                <button class='btn btn-danger' onclick='triggerFileUpload()'>
-                  <span class='ion-android-upload'></span>&nbsp;&nbsp;Upload an Icon
-                </button>&nbsp;&nbsp;
-                <button class='btn btn-primary' data-toggle='modal' data-target='#IconLibraryModal'>
-                  Pick an Icon
-                </button><br />
-                <small>Recommended Size: 512x512</small>
-                <canvas id='canvas' height='300' width='300'></canvas>
-                <a id='download' class='btn btn-primary disabled' onclick='downloadIcon(this)'><span class='ion-android-download'></span> Download</a>
+    <div class='page-container'>
+        <div class='container'>
+            <div class="app-grid">
+                <div class="controls-grid">
+                    <div class="controls-grid-title">
+                        <h4>Icon</h4>
+                    </div>
+
+                    <h5 class='controls-grid-subtitle'>Shape:</h5>
+                    <h5 class='controls-grid-item'>&nbsp;</h5>
+                    <div class='controls-grid-item'>
+                        <select id='shapePicker' class='form-control'>
+                            <option value='circle'>Circle</option>
+                            <option value='square'>Square</option>
+                        </select>
+                    </div>
+                    <h5 class='controls-grid-item'>&nbsp;</h5>
+
+                    <h5 class='controls-grid-subtitle'>Color:</h5>
+                    <h5 class='controls-grid-item'>#&nbsp;</h5>
+                    <div class='controls-grid-item'>
+                        <input type='text' id='colorPicker' value='1abc9c' maxlength='6'></input>
+                    </div>
+                    <h5 class='controls-grid-item'>&nbsp;</h5>
+
+                    <h5 class='controls-grid-subtitle'>Padding:</h5>
+                    <h5 class='controls-grid-item'>0&nbsp;</h5>
+                    <div class='controls-grid-item'>
+                        <input id='paddingPicker' type='range' min='0.00' max='1.00' step='0.01' value='0.00'>
+                    </div>
+                    <h5 class='controls-grid-item'>&nbsp;100%</h5>
+
+                    <div class="controls-grid-title">
+                        <h4>Shadow</h4>
+                    </div>
+
+                    <h5 class='controls-grid-subtitle'>Angle:</h5>
+                    <h5 class='controls-grid-item'>0&nbsp;</h5>
+                    <div class='controls-grid-item'>
+                        <input id='anglePicker' type='range' min='0' max='90' step='1' value='45'>
+                    </div class='controls-grid-item'>
+                    <h5 class='controls-grid-item'>&nbsp;90&deg;</h5>
+
+                    <h5 class='controls-grid-subtitle'>Opacity:</h5>
+                    <h5 class='controls-grid-item'>0&nbsp;</h5>
+                    <div class='controls-grid-item'>
+                        <input id='opacityPicker' type='range' min='0.00' max='1.00' step='0.01' value='0.30'>
+                    </div>
+                    <h5 class='controls-grid-item'>&nbsp;100%</h5>
+
+                    <h5 class='controls-grid-subtitle'>Length:</h5>
+                    <h5 class='controls-grid-item'>0&nbsp;</h5>
+                    <div class='controls-grid-item'>
+                        <input id='lengthPicker' type='range' min='0.00' max='1.00' step='0.01' value='1.00'>
+                    </div>
+                    <h5 class='controls-grid-item'>&nbsp;100%</h5>
+                </div>
+
+                <div class='preview-area'>
+                    <canvas id='canvas' class="preview-canvas" height='300' width='300'></canvas>
+                    <a id='download' class='btn btn-primary disabled'>
+                        <span class='ion-android-download'></span> Download
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -219,25 +178,13 @@
         </div>
       </div>
     </div>
-	<br>
-	<footer>
-		Copyright &copy; 2016 <a href='http://secondhalf.tech/' rel='noopener' target='_blank'>Second Half Technologies</a>
-	</footer>
-	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
-	<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js'></script>
-	<script src='js/libraries_1.1.min.js'></script>
+    <input type='file' id='files' name='files[]' />
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js'></script>
+    <script src='js/colpick.min.js'></script>
+    <script src='js/rangeslider.min.js'></script>
+    <script src='js/flaticon.js'></script>
 	<script src='/sw_install.js' async></script>
-
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-75327608-1', 'auto');
-      ga('send', 'pageview');
-
-    </script>
 </body>
 
 </html>

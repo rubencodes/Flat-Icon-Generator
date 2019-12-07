@@ -5,7 +5,7 @@
   "main": "index.html",
   "now": {
     "name": "FlatStyle",
-    "type":"static",
+    "type": "static",
     "alias": "flat.style"
   },
   "dependencies": {
