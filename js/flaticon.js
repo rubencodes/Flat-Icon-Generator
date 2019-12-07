@@ -288,9 +288,7 @@ class ConfigurationControls {
         this.shapePicker.addEventListener("change", (event) => {
             this.iconShape = event.target.value;
 
-            console.log(this.shape);
             if (this.onBackgroundChange) {
-                console.log("onBackgroundChange", this.onBackgroundChange);
                 this.onBackgroundChange();
             }
         });
@@ -586,9 +584,7 @@ class AppController {
     }
 
     updateCurrentBackground = () => {
-        console.log("test");
         if (this.lastUnmergedIconCanvas !== null) {
-            console.log("test2");
             const iconBackground = this.configurationControls.iconBackground;
             const iconShape = this.configurationControls.iconShape;
             this.lastIconBackground = Util.createIconBackground(iconBackground, iconShape, this.lastIconBackground.width);
